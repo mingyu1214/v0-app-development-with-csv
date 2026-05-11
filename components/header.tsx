@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Brain, BarChart3, Shield } from 'lucide-react'
+import { Brain, BarChart3, Info } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -12,7 +12,7 @@ export function Header() {
   const navItems = [
     { href: '/', label: '홈', icon: Brain },
     { href: '/analyze', label: '분석하기', icon: BarChart3 },
-    { href: '/privacy', label: '개인정보 처리방침', icon: Shield },
+    { href: '/about', label: '소개', icon: Info },
   ]
 
   return (
