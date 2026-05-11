@@ -29,7 +29,7 @@ const features = [
 
 const stats = [
   { value: '25,000+', label: '분석 데이터' },
-  { value: '85%', label: '정확도' },
+  { value: '87%', label: '정확도' },
   { value: '4.8', label: '사용자 만족도' },
 ]
 
