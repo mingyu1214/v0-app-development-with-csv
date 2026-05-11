@@ -27,7 +27,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [privacyAgreed, setPrivacyAgreed] = useState(false)
   const [formData, setFormData] = useState<UserInput>({
-    age: 25,
+    age: 20,
     jobType: '',
     dailyUsageHours: 6,
     sleepHours: 7,
@@ -52,7 +52,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
       case 0:
         return privacyAgreed
       case 1:
-        return formData.age >= 10 && formData.age <= 80
+        return formData.age >= 14 && formData.age <= 80
       case 2:
         return formData.jobType !== ''
       case 3:
@@ -149,16 +149,19 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
               <Slider
                 value={[formData.age]}
                 onValueChange={([value]) => setFormData({ ...formData, age: value })}
-                min={10}
+                min={14}
                 max={80}
                 step={1}
                 className="w-full"
               />
               <div className="mt-2 flex justify-between text-sm text-muted-foreground">
-                <span>10세</span>
+                <span>14세</span>
                 <span>80세</span>
               </div>
             </div>
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              14세 미만은 법정대리인 동의가 필요하여 이용이 제한됩니다.
+            </p>
           </div>
         )
 
