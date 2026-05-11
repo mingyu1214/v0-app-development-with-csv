@@ -55,12 +55,27 @@ export function analyzeDigitalWellbeing(input: UserInput): AnalysisResult {
     baseWellbeing + usageWellbeingImpact + sleepWellbeingImpact + (Math.random() * 0.1 - 0.05)
   ))
 
-  // 위험 레벨 판정
+  // 위험 레벨 판정 (건강 권고 기준 적용)
+  // - 권장 수면: 7-9시간
+  // - 권장 스크린 타임: 4시간 이하
   const highRisk = isHighRisk(usageNorm, sleepNorm, performanceScore)
   let riskLevel: 'low' | 'medium' | 'high' = 'low'
-  if (highRisk || (dailyUsageHours > 10 && sleepHours < 5)) {
+  
+  if (highRisk || (dailyUsageHours >= 10 && sleepHours < 5)) {
     riskLevel = 'high'
-  } else if (dailyUsageHours > 6 || sleepHours < 6 || performanceScore < 0.5) {
+  } else if (
+    dailyUsageHours >= 8 || 
+    sleepHours < 5 || 
+    (dailyUsageHours >= 6 && sleepHours < 6) ||
+    performanceScore < 0.4
+  ) {
+    riskLevel = 'high'
+  } else if (
+    dailyUsageHours >= 5 || 
+    sleepHours < 7 || 
+    performanceScore < 0.6 ||
+    wellbeingScore < 0.5
+  ) {
     riskLevel = 'medium'
   }
 
