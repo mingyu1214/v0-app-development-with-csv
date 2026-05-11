@@ -109,13 +109,6 @@ const references = [
     description: '스마트폰 중독과 신체 활동 감소 간 유의미한 상관관계(p<0.001). 선택적 주의력 정확도에서 유의미한 차이(p=0.005).',
     doi: '10.3389/fpsyg.2023.1182749',
   },
-  {
-    title: '청소년 스마트폰 사용과 수면의 질 및 정신건강의 관계',
-    journal: 'Journal of Korean Academy of Nursing',
-    year: 2023,
-    description: '취침 전 스마트폰 사용이 수면의 질 저하와 우울, 불안 증상 증가에 유의미한 영향. 1시간 이상 사용 시 수면 효율 15% 감소.',
-    doi: '10.4040/jkan.22135',
-  },
 ]
 
 export default function AboutPage() {
