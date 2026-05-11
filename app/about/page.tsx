@@ -7,59 +7,83 @@ import {
   FileText, 
   Sparkles, 
   Shield, 
-  Code2, 
-  Zap,
-  ExternalLink
+  BarChart3, 
+  Eye,
+  ExternalLink,
+  AlertTriangle
 } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
-const techFeatures = [
+// Slide 01 - BrainTox 위험도 분석 (3개 카드)
+const analysisFeatures = [
   {
-    icon: Brain,
-    title: '학술 연구 기반 알고리즘',
-    description: '34개 연구를 종합한 메타분석과 최신 신경심리학 연구를 기반으로 인지 기능 영향도를 계산합니다.',
+    color: 'bg-blue-400',
+    title: '연구 근거',
+    description: '스크린 사용 장애 메타분석과 아동·청소년 스마트폰 사용 연구 반영',
   },
   {
-    icon: FileText,
-    title: '근거 중심 분석',
-    description: 'WHO 권장 기준(2시간)과 학술 연구에서 확인된 임계값(4시간)을 기반으로 위험도를 산정합니다.',
+    color: 'bg-teal-400',
+    title: '위험도 모델',
+    description: '15,000행 위험도 데이터로 학습한 Random Forest 모델 사용',
   },
   {
-    icon: Sparkles,
-    title: 'AI 맞춤 솔루션',
-    description: '분석 결과와 연구에서 검증된 중재법을 바탕으로 개인화된 디지털 디톡스 가이드를 생성합니다.',
-  },
-  {
-    icon: Shield,
-    title: '개인정보 보호',
-    description: '모든 분석은 클라이언트 측에서 처리되며, 어떤 개인정보도 서버에 저장되지 않습니다.',
-  },
-  {
-    icon: Code2,
-    title: '효과 크기 기반 계산',
-    description: "메타분석에서 도출된 효과 크기(Hedges' g)를 활용하여 인지 영역별 영향도를 정량화합니다.",
-  },
-  {
-    icon: Zap,
-    title: '즉시 사용 가능',
-    description: '별도 설치 없이 웹 브라우저에서 바로 분석을 시작할 수 있습니다.',
+    color: 'bg-green-400',
+    title: 'Azure ML',
+    description: 'scoring script와 endpoint/deployment 설정 기반 클라우드 배포 구조',
   },
 ]
 
-const howItWorks = [
+// Slide 02 - 기술 스택 (6개 카드)
+const techFeatures = [
   {
-    step: 1,
-    title: '데이터 수집',
-    description: '사용자가 입력한 미디어 사용 습관 정보를 수집합니다. 숏폼 시청 시간, 게임 시간, 취침 전 사용 패턴, 사용 장소 등을 분석합니다.',
+    color: 'bg-gradient-to-br from-blue-400 to-purple-400',
+    title: '논문 기반 위험 신호 계산',
+    description: '효과 크기와 사용 시간 기준을 반영해 위험 신호를 산정합니다.',
   },
   {
-    step: 2,
-    title: 'AI 분석',
-    description: '머신러닝 모델이 수집된 데이터를 분석하여 인지 기능 저하 위험도를 계산합니다. 주의력, 기억력, 정보처리속도, 창의력 등 영역별 영향을 예측합니다.',
+    color: 'bg-teal-400',
+    title: '간결한 입력 설계',
+    description: '나이, 사용 시간, 수면 시간만으로 빠르게 분석합니다.',
   },
   {
-    step: 3,
-    title: '맞춤 솔루션 제공',
-    description: 'LLM이 분석 결과를 바탕으로 개인화된 디지털 디톡스 가이드라인을 생성합니다. 실천 가능한 구체적인 행동 지침과 함께 인지 기능 회복을 위한 솔루션을 제안합니다.',
+    color: 'bg-green-400',
+    title: 'Azure 기반 클라우드 ML',
+    description: 'Azure ML 배포용 scoring script와 설정을 준비했습니다.',
+  },
+  {
+    color: 'bg-amber-400',
+    title: '위험도 전용 모델',
+    description: 'Random Forest 기반 위험도 분류 결과를 제공합니다.',
+  },
+  {
+    color: 'bg-rose-400',
+    title: '성능 지표 기반 검증',
+    description: 'Macro F1 0.726 모델을 대표 지표로 제시합니다.',
+  },
+  {
+    color: 'bg-blue-300',
+    title: '해석 가능한 결과',
+    description: '연구 점수와 ML 예측을 함께 보여줍니다.',
+  },
+]
+
+// Slide 03 - 대표 숫자
+const stats = [
+  {
+    value: '15,000',
+    label: '위험도 학습 행',
+    color: 'text-green-400',
+  },
+  {
+    value: '0.726',
+    label: '위험도 Macro F1',
+    color: 'text-green-400',
+  },
+  {
+    value: 'g=.50',
+    label: '주의·집중 효과',
+    color: 'text-green-400',
   },
 ]
 
@@ -100,84 +124,106 @@ export default function AboutPage() {
       <Header />
       
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Section 1: BrainTox 위험도 분석 */}
         <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                BrainTox
-              </span>{' '}
-              소개
+          <div className="container mx-auto px-4">
+            <div className="mb-4">
+              <span className="inline-block rounded-full border border-teal-500/50 bg-teal-500/10 px-4 py-1.5 text-sm font-medium text-teal-400">
+                BrainTox Product Preview
+              </span>
+            </div>
+            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">
+              BrainTox 위험도 분석
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted-foreground">
-              디지털 미디어 과의존에 따른 뇌 인지 기능 저하를 예측하고, AI 기반의 맞춤형 솔루션을 제공하는 혁신적인 서비스입니다.
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+              논문 근거와 Azure ML 위험도 모델을 중심으로 디지털 과의존 위험 신호를 분석합니다.
             </p>
+            
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {analysisFeatures.map((feature, index) => (
+                <Card 
+                  key={index} 
+                  className="border-border/50 bg-card/50 p-6"
+                >
+                  <div className={`h-4 w-4 rounded-full ${feature.color}`} />
+                  <h3 className="mt-6 text-xl font-semibold">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </Card>
+              ))}
+            </div>
+
+            {/* 핵심 문장 */}
+            <div className="mt-12">
+              <h3 className="text-lg font-semibold text-amber-400">홈페이지 핵심 문장</h3>
+              <p className="mt-2 text-muted-foreground">
+                BrainTox는 논문 기반 위험 신호 계산과 Azure ML 위험도 모델을 결합해 스마트폰 사용량과 수면 패턴의 디지털 과의존 위험도를 분석합니다.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="py-12">
+        {/* Section 2: 기술 스택 */}
+        <section className="py-16">
           <div className="container mx-auto px-4">
-            <Card className="border-border/50 bg-card/50 p-8 md:p-12">
-              <h2 className="text-2xl font-bold text-primary md:text-3xl">프로젝트 미션</h2>
-              <p className="mt-6 text-pretty leading-relaxed text-muted-foreground md:text-lg">
-                무분별한 숏폼 시청과 장시간의 게임이 전두엽 기능에 미치는 악영향을 수치화하여 경각심을 주고, 
-                잃어버린 집중력을 되찾기 위한 구체적인 솔루션을 제공합니다. BrainTox는 단순한 스크린 타임 추적을 넘어, 
-                과학적 데이터와 AI 기술을 결합하여 당신의 뇌 건강을 지키는 디지털 웰빙 파트너입니다.
+            <h2 className="text-3xl font-bold md:text-4xl">기술 스택</h2>
+            <p className="mt-4 text-muted-foreground">
+              연구 기반 계산, 간결한 입력, Azure ML 위험도 모델을 하나의 서비스 흐름으로 연결합니다.
+            </p>
+            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {techFeatures.map((feature, index) => (
+                <Card 
+                  key={index} 
+                  className="border-border/50 bg-card/50 p-6 transition-all hover:border-primary/30"
+                >
+                  <div className={`h-4 w-4 rounded-full ${feature.color}`} />
+                  <h3 className="mt-6 text-lg font-semibold">{feature.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: 대표 숫자와 고지 문구 */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold md:text-4xl">대표 숫자와 고지 문구</h2>
+            <p className="mt-4 text-muted-foreground">
+              위험도 분석에 필요한 수치와 안전 고지만 명확하게 노출합니다.
+            </p>
+            
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {stats.map((stat, index) => (
+                <Card 
+                  key={index} 
+                  className="border-border/50 bg-card/50 p-8 text-center"
+                >
+                  <div className={`text-5xl font-bold ${stat.color}`}>
+                    {stat.value}
+                  </div>
+                  <p className="mt-3 text-muted-foreground">{stat.label}</p>
+                </Card>
+              ))}
+            </div>
+
+            {/* 결과 화면 고지 */}
+            <Card className="mt-8 border-amber-500/30 bg-amber-500/5 p-6">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-amber-400">
+                <AlertTriangle className="h-5 w-5" />
+                결과 화면 고지
+              </h3>
+              <p className="mt-3 text-muted-foreground">
+                이 결과는 연구 기반 계산과 위험도 분류 모델의 참고용 예측이며, 의료 또는 상담 진단이 아닙니다.
               </p>
             </Card>
-          </div>
-        </section>
 
-        {/* Tech Stack Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center text-3xl font-bold md:text-4xl">기술 스택</h2>
-            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {techFeatures.map((feature, index) => {
-                const Icon = feature.icon
-                return (
-                  <Card 
-                    key={index} 
-                    className="group border-border/50 bg-card/50 p-6 transition-all hover:border-primary/50 hover:bg-card"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="mt-4 text-lg font-semibold">{feature.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </Card>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center text-3xl font-bold md:text-4xl">작동 원리</h2>
-            <div className="mx-auto mt-12 max-w-3xl">
-              <Card className="border-border/50 bg-card/50 p-8">
-                <div className="space-y-8">
-                  {howItWorks.map((item) => (
-                    <div key={item.step} className="flex gap-6">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
-                        {item.step}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-primary">{item.title}</h3>
-                        <p className="mt-2 leading-relaxed text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              노출 기준: 위험도 학습 행 / 위험도 Macro F1 / 논문 효과 크기 중심
+            </p>
           </div>
         </section>
 
@@ -231,9 +277,9 @@ export default function AboutPage() {
               &copy; 2026 BrainTox. 디지털 웰빙을 위한 첫걸음.
             </p>
             <div className="flex gap-4 text-sm text-muted-foreground">
-              <a href="/privacy" className="transition-colors hover:text-foreground">
+              <Link href="/privacy" className="transition-colors hover:text-foreground">
                 개인정보처리방침
-              </a>
+              </Link>
             </div>
           </div>
         </div>
