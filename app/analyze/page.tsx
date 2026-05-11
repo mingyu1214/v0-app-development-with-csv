@@ -1,16 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Header } from '@/components/header'
 import { AnalysisWizard } from '@/components/analysis-wizard'
 import { AnalysisResultDisplay } from '@/components/analysis-result'
 import { analyzeDigitalWellbeing } from '@/lib/analysis'
-import { createClient } from '@/lib/supabase/client'
 import type { UserInput, AnalysisResult } from '@/lib/types'
 
 export default function AnalyzePage() {
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [input, setInput] = useState<UserInput | null>(null)
   const [result, setResult] = useState<AnalysisResult | null>(null)
@@ -19,53 +16,22 @@ export default function AnalyzePage() {
     setIsLoading(true)
     setInput(data)
 
-    // Simulate processing time
+    // 분석 처리 시뮬레이션 (클라이언트 측에서만 수행)
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
+    // 클라이언트 측에서 분석 실행 - 서버로 데이터 전송하지 않음
     const analysisResult = analyzeDigitalWellbeing(data)
     setResult(analysisResult)
     setIsLoading(false)
+
+    // 분석 완료 후 input 데이터 즉시 휘발 (메모리에서만 결과 유지)
+    // input은 결과 표시에 필요하므로 유지하되, 페이지 이탈 시 자동 삭제됨
   }
 
   const handleReset = () => {
+    // 모든 데이터 휘발
     setInput(null)
     setResult(null)
-  }
-
-  const handleSave = async () => {
-    if (!input || !result) return
-
-    const supabase = createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    if (!user) {
-      // Redirect to login with return URL
-      router.push('/auth/login?returnTo=/analyze')
-      return
-    }
-
-    try {
-      const { error } = await supabase.from('user_analyses').insert({
-        user_id: user.id,
-        age: input.age,
-        job_type: input.jobType,
-        daily_usage_hours: input.dailyUsageHours,
-        sleep_hours: input.sleepHours,
-        performance_score: result.performanceScore,
-        wellbeing_score: result.wellbeingScore,
-        risk_level: result.riskLevel,
-        recommendations: result.recommendations,
-      })
-
-      if (error) throw error
-
-      router.push('/dashboard')
-    } catch (error) {
-      console.error('Failed to save analysis:', error)
-      alert('저장에 실패했습니다. 다시 시도해주세요.')
-    }
   }
 
   return (
@@ -96,7 +62,6 @@ export default function AnalyzePage() {
                 result={result}
                 input={input!}
                 onReset={handleReset}
-                onSave={handleSave}
               />
             </div>
           )}

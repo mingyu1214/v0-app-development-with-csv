@@ -72,9 +72,9 @@ export default function HomePage() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/dashboard">
+              <Link href="/privacy">
                 <Button size="lg" variant="outline" className="gap-2 px-8">
-                  대시보드 보기
+                  개인정보 처리방침
                 </Button>
               </Link>
             </div>
@@ -167,9 +167,13 @@ export default function HomePage() {
               <Brain className="h-5 w-5 text-primary" />
               <span className="font-semibold">BrainTox</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              AI 기반 디지털 웰빙 분석 플랫폼
-            </p>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <Link href="/privacy" className="hover:text-foreground transition-colors">
+                개인정보 처리방침
+              </Link>
+              <span>|</span>
+              <span>AI 기반 디지털 웰빙 분석 플랫폼</span>
+            </div>
           </div>
         </div>
       </footer>

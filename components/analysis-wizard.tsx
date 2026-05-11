@@ -2,13 +2,13 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, User, Clock, Moon, Briefcase } from 'lucide-react'
+import { ChevronLeft, ChevronRight, User, Clock, Moon, Briefcase, Shield, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
 import { JOB_TYPES, type UserInput } from '@/lib/types'
+import Link from 'next/link'
 
 interface AnalysisWizardProps {
   onComplete: (data: UserInput) => void
@@ -16,6 +16,7 @@ interface AnalysisWizardProps {
 }
 
 const steps = [
+  { id: 0, title: '개인정보 동의', icon: Shield, description: '분석을 위한 정보 수집에 동의해주세요' },
   { id: 1, title: '나이', icon: User, description: '연령대를 선택해주세요' },
   { id: 2, title: '직업', icon: Briefcase, description: '직업을 선택해주세요' },
   { id: 3, title: '디지털 사용', icon: Clock, description: '하루 평균 디지털 기기 사용 시간' },
@@ -23,7 +24,8 @@ const steps = [
 ]
 
 export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [privacyAgreed, setPrivacyAgreed] = useState(false)
   const [formData, setFormData] = useState<UserInput>({
     age: 25,
     jobType: '',
@@ -32,7 +34,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
   })
 
   const handleNext = () => {
-    if (currentStep < steps.length) {
+    if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
       onComplete(formData)
@@ -40,13 +42,15 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
   }
 
   const handleBack = () => {
-    if (currentStep > 1) {
+    if (currentStep > 0) {
       setCurrentStep(currentStep - 1)
     }
   }
 
   const canProceed = () => {
     switch (currentStep) {
+      case 0:
+        return privacyAgreed
       case 1:
         return formData.age >= 10 && formData.age <= 80
       case 2:
@@ -62,6 +66,78 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
 
   const renderStepContent = () => {
     switch (currentStep) {
+      case 0:
+        return (
+          <div className="space-y-6">
+            <Card className="border-primary/30 bg-primary/5 p-4">
+              <h3 className="mb-3 font-semibold">수집하는 정보</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  나이 (연령대 파악 목적)
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  직업 유형 (사용 패턴 분석)
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  일일 디지털 기기 사용 시간
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  일일 수면 시간
+                </li>
+              </ul>
+            </Card>
+
+            <Card className="border-green-500/30 bg-green-500/5 p-4">
+              <h3 className="mb-3 font-semibold text-green-400">데이터 처리 방식</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+                  입력된 정보는 분석 결과 도출 즉시 휘발됩니다
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+                  서버나 데이터베이스에 저장되지 않습니다
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+                  제3자에게 제공되지 않습니다
+                </li>
+              </ul>
+            </Card>
+
+            <button
+              onClick={() => setPrivacyAgreed(!privacyAgreed)}
+              className={cn(
+                'flex w-full items-center gap-3 rounded-xl border-2 p-4 transition-all',
+                privacyAgreed
+                  ? 'border-primary bg-primary/10'
+                  : 'border-border hover:border-primary/50'
+              )}
+            >
+              <div
+                className={cn(
+                  'flex h-6 w-6 items-center justify-center rounded-md border-2 transition-colors',
+                  privacyAgreed
+                    ? 'border-primary bg-primary'
+                    : 'border-muted-foreground'
+                )}
+              >
+                {privacyAgreed && <Check className="h-4 w-4 text-primary-foreground" />}
+              </div>
+              <span className="text-left text-sm">
+                <Link href="/privacy" className="text-primary underline" target="_blank">
+                  개인정보 처리방침
+                </Link>
+                을 읽었으며, 위 정보 수집에 동의합니다.
+              </span>
+            </button>
+          </div>
+        )
+
       case 1:
         return (
           <div className="space-y-8">
@@ -177,7 +253,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
     }
   }
 
-  const currentStepData = steps[currentStep - 1]
+  const currentStepData = steps[currentStep]
   const StepIcon = currentStepData.icon
 
   return (
@@ -185,14 +261,14 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
       {/* Progress */}
       <div className="mb-8">
         <div className="mb-2 flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">단계 {currentStep} / {steps.length}</span>
-          <span className="text-primary">{Math.round((currentStep / steps.length) * 100)}%</span>
+          <span className="text-muted-foreground">단계 {currentStep + 1} / {steps.length}</span>
+          <span className="text-primary">{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-secondary">
           <motion.div
             className="h-full bg-gradient-to-r from-primary to-accent"
             initial={{ width: 0 }}
-            animate={{ width: `${(currentStep / steps.length) * 100}%` }}
+            animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
             transition={{ duration: 0.3 }}
           />
         </div>
@@ -226,7 +302,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
         <Button
           variant="outline"
           onClick={handleBack}
-          disabled={currentStep === 1}
+          disabled={currentStep === 0}
           className="gap-2"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -237,7 +313,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
           disabled={!canProceed() || isLoading}
           className="gap-2 bg-primary hover:bg-primary/90"
         >
-          {currentStep === steps.length ? (
+          {currentStep === steps.length - 1 ? (
             isLoading ? '분석 중...' : '분석하기'
           ) : (
             <>

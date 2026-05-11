@@ -2,22 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Brain, LayoutDashboard, User, LogOut } from 'lucide-react'
+import { Brain, BarChart3, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-interface HeaderProps {
-  user?: { email: string } | null
-  onSignOut?: () => void
-}
-
-export function Header({ user, onSignOut }: HeaderProps) {
+export function Header() {
   const pathname = usePathname()
 
   const navItems = [
     { href: '/', label: '홈', icon: Brain },
-    { href: '/analyze', label: '분석하기', icon: LayoutDashboard },
-    { href: '/dashboard', label: '대시보드', icon: User },
+    { href: '/analyze', label: '분석하기', icon: BarChart3 },
+    { href: '/privacy', label: '개인정보 처리방침', icon: Shield },
   ]
 
   return (
@@ -52,36 +47,12 @@ export function Header({ user, onSignOut }: HeaderProps) {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
-          {user ? (
-            <>
-              <span className="hidden text-sm text-muted-foreground md:block">
-                {user.email}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onSignOut}
-                className="gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span className="hidden md:inline">로그아웃</span>
-              </Button>
-            </>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Link href="/auth/login">
-                <Button variant="ghost" size="sm">
-                  로그인
-                </Button>
-              </Link>
-              <Link href="/auth/sign-up">
-                <Button size="sm" className="bg-primary hover:bg-primary/90">
-                  시작하기
-                </Button>
-              </Link>
-            </div>
-          )}
+        <div className="flex items-center gap-2">
+          <Link href="/analyze">
+            <Button size="sm" className="bg-primary hover:bg-primary/90">
+              무료 분석 시작
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

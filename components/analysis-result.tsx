@@ -8,7 +8,6 @@ import {
   CheckCircle,
   TrendingUp,
   TrendingDown,
-  ArrowRight,
 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -31,7 +30,6 @@ interface AnalysisResultProps {
   result: AnalysisResult
   input: UserInput
   onReset: () => void
-  onSave?: () => void
 }
 
 const riskColors = {
@@ -62,7 +60,6 @@ export function AnalysisResultDisplay({
   result,
   input,
   onReset,
-  onSave,
 }: AnalysisResultProps) {
   const { performanceScore, wellbeingScore, riskLevel, recommendations, comparisonData } = result
 
@@ -298,17 +295,21 @@ export function AnalysisResultDisplay({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="flex flex-col gap-3 sm:flex-row"
+        className="flex flex-col gap-3 sm:flex-row sm:justify-center"
       >
-        {onSave && (
-          <Button onClick={onSave} className="gap-2 bg-primary hover:bg-primary/90">
-            결과 저장하기
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        )}
         <Button variant="outline" onClick={onReset}>
           다시 분석하기
         </Button>
+      </motion.div>
+
+      {/* Data Notice */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="text-center text-sm text-muted-foreground"
+      >
+        입력하신 정보는 저장되지 않으며, 페이지를 떠나면 자동으로 삭제됩니다.
       </motion.div>
     </div>
   )
