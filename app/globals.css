@@ -12,13 +12,13 @@
 */
 
 :root {
-  /* Nantucket Breeze inspired - soft blue-gray background */
-  --background: oklch(0.25 0.03 230);
-  --foreground: oklch(0.96 0.005 240);
-  --card: oklch(0.30 0.035 230);
-  --card-foreground: oklch(0.96 0.005 240);
-  --popover: oklch(0.30 0.035 230);
-  --popover-foreground: oklch(0.96 0.005 240);
+  /* Nantucket Breeze inspired - lighter blue background */
+  --background: oklch(0.35 0.04 225);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.40 0.045 225);
+  --card-foreground: oklch(0.98 0.005 240);
+  --popover: oklch(0.40 0.045 225);
+  --popover-foreground: oklch(0.98 0.005 240);
   /* Alaskan Blue - primary */
   --primary: oklch(0.62 0.12 220);
   --primary-foreground: oklch(0.98 0.005 240);
@@ -51,13 +51,13 @@
 }
 
 .dark {
-  /* Nantucket Breeze inspired - soft blue-gray background */
-  --background: oklch(0.25 0.03 230);
-  --foreground: oklch(0.96 0.005 240);
-  --card: oklch(0.30 0.035 230);
-  --card-foreground: oklch(0.96 0.005 240);
-  --popover: oklch(0.30 0.035 230);
-  --popover-foreground: oklch(0.96 0.005 240);
+  /* Nantucket Breeze inspired - lighter blue background */
+  --background: oklch(0.35 0.04 225);
+  --foreground: oklch(0.98 0.005 240);
+  --card: oklch(0.40 0.045 225);
+  --card-foreground: oklch(0.98 0.005 240);
+  --popover: oklch(0.40 0.045 225);
+  --popover-foreground: oklch(0.98 0.005 240);
   /* Alaskan Blue - primary */
   --primary: oklch(0.62 0.12 220);
   --primary-foreground: oklch(0.98 0.005 240);
