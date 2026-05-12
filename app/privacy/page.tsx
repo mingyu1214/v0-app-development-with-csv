@@ -70,14 +70,14 @@ export default function PrivacyPage() {
           </div>
 
           {/* Key Point */}
-          <Card className="mb-8 border-primary/30 bg-primary/5 p-6">
+          <Card className="mb-8 border-primary/30 bg-primary/10 p-6">
             <div className="flex items-start gap-4">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/20">
                 <Trash2 className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <h3 className="mb-1 font-semibold text-primary">핵심 원칙: 데이터 미저장</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/70">
                   BrainTox는 사용자의 어떠한 정보도 저장하지 않습니다. 
                   입력된 정보는 분석 결과 도출 후 즉시 휘발되며, 
                   서버나 데이터베이스에 기록되지 않습니다.
@@ -91,14 +91,14 @@ export default function PrivacyPage() {
             {sections.map((section, index) => {
               const Icon = section.icon
               return (
-                <Card key={index} className="border-border/50 bg-card/50 p-6">
+                <Card key={index} className="border-border/50 bg-card p-6">
                   <div className="mb-4 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
                       <Icon className="h-5 w-5 text-primary" />
                     </div>
-                    <h2 className="text-xl font-semibold">{section.title}</h2>
+                    <h2 className="text-xl font-semibold text-foreground">{section.title}</h2>
                   </div>
-                  <p className="whitespace-pre-line text-muted-foreground">
+                  <p className="whitespace-pre-line text-foreground/70">
                     {section.content}
                   </p>
                 </Card>
@@ -107,9 +107,9 @@ export default function PrivacyPage() {
           </div>
 
           {/* Contact */}
-          <Card className="mt-8 border-border/50 bg-card/50 p-6">
-            <h2 className="mb-4 text-xl font-semibold">문의</h2>
-            <p className="text-muted-foreground">
+          <Card className="mt-8 border-border/50 bg-card p-6">
+            <h2 className="mb-4 text-xl font-semibold text-foreground">문의</h2>
+            <p className="text-foreground/70">
               개인정보 처리방침에 대한 문의사항이 있으시면 아래로 연락해주세요.
             </p>
             <p className="mt-2 text-primary">contact@braintox.app</p>
