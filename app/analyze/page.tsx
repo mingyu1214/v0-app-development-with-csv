@@ -16,16 +16,35 @@ export default function AnalyzePage() {
     setIsLoading(true)
     setInput(data)
 
-    // 분석 처리 시뮬레이션 (클라이언트 측에서만 수행)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Azure ML 엔드포인트 호출
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
 
-    // 클라이언트 측에서 분석 실행 - 서버로 데이터 전송하지 않음
-    const analysisResult = analyzeDigitalWellbeing(data)
-    setResult(analysisResult)
+      if (response.ok) {
+        const azureResult = await response.json()
+        console.log('[v0] Azure ML result:', azureResult)
+        
+        // Azure ML 결과를 기존 형식으로 변환
+        const analysisResult = analyzeDigitalWellbeing(data, azureResult.prediction)
+        setResult(analysisResult)
+      } else {
+        // Azure ML 실패 시 로컬 분석으로 폴백
+        console.log('[v0] Azure ML failed, using local analysis')
+        const analysisResult = analyzeDigitalWellbeing(data)
+        setResult(analysisResult)
+      }
+    } catch (error) {
+      // 에러 시 로컬 분석으로 폴백
+      console.log('[v0] Error calling Azure ML:', error)
+      const analysisResult = analyzeDigitalWellbeing(data)
+      setResult(analysisResult)
+    }
+
     setIsLoading(false)
-
-    // 분석 완료 후 input 데이터 즉시 휘발 (메모리에서만 결과 유지)
-    // input은 결과 표시에 필요하므로 유지하되, 페이지 이탈 시 자동 삭제됨
   }
 
   const handleReset = () => {
