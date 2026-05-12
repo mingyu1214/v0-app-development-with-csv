@@ -2,18 +2,25 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const AZURE_ML_ENDPOINT = 'https://focus-guard-endpoint.koreacentral.inference.ml.azure.com/score'
 
+// 나이를 age_group으로 변환
+function getAgeGroup(age: number): string {
+  if (age < 20) return 'Teenager'
+  if (age < 30) return '20s'
+  if (age < 40) return '30s'
+  if (age < 50) return '40s'
+  return '50s+'
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { age, jobType, dailyUsageHours, sleepHours } = body
 
-    // 정규화 (CSV 데이터 기준)
-    // age: 10-80 → 0-1
-    // usage_h: 0-16 → 0-1  
-    // sleep_h: 2-10 → 0-1
-    const ageNorm = (age - 10) / 70
-    const usageNorm = dailyUsageHours / 16
-    const sleepNorm = (sleepHours - 2) / 8
+    // CSV 데이터 형식에 맞게 변환
+    // usage_h: 원본값 그대로 (0-10시간)
+    // sleep_h: 원본값 그대로 (4-9시간)
+    // age_group: 나이를 그룹으로 변환
+    const ageGroup = getAgeGroup(age)
 
     const apiKey = process.env.AZURE_ML_API_KEY
     
@@ -24,10 +31,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // CSV 컬럼명에 맞춰서 전송
     const inputData = {
       input_data: {
-        columns: ['age', 'job_type', 'usage_h', 'sleep_h'],
-        data: [[ageNorm, jobType, usageNorm, sleepNorm]]
+        columns: ['usage_h', 'sleep_h', 'job_type', 'age_group'],
+        data: [[dailyUsageHours, sleepHours, jobType, ageGroup]]
       }
     }
 
