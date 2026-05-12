@@ -28,9 +28,10 @@ const features = [
 ]
 
 const stats = [
-  { value: '25,000+', label: '분석 데이터' },
-  { value: '87%', label: '정확도' },
-  { value: '4.8', label: '사용자 만족도' },
+  { value: '15,000', label: '위험도 학습 행' },
+  { value: '0.726', label: '위험도 Macro F1' },
+  { value: 'g=.50', label: '주의·집중 효과 크기' },
+  { value: '34', label: '메타분석 포함 연구' },
 ]
 
 export default function HomePage() {
@@ -61,20 +62,20 @@ export default function HomePage() {
             </h1>
             
             <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              BrainTox는 25,000개 이상의 데이터를 기반으로 당신의 디지털 사용 습관을 분석하고 
-              맞춤형 개선 가이드를 제공합니다.
+              BrainTox는 스크린 사용 장애 메타분석과 아동·청소년 스마트폰 사용 연구를 바탕으로 
+              사용 시간과 수면 패턴의 위험 신호를 계산하고, Azure ML 배포 구조로 준비된 위험도 모델을 통해 
+              자기 점검용 분석 결과를 제공합니다.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/analyze">
                 <Button size="lg" className="gap-2 bg-primary px-8 hover:bg-primary/90">
-                  무료로 분석하기
-                  <ArrowRight className="h-4 w-4" />
+                  동의 후 분석하기
                 </Button>
               </Link>
-              <Link href="/privacy">
+              <Link href="/about">
                 <Button size="lg" variant="outline" className="gap-2 px-8">
-                  개인정보 처리방침
+                  근거 보기
                 </Button>
               </Link>
             </div>
@@ -85,11 +86,14 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="border-y border-border/40 bg-secondary/30 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-3 gap-8">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {stats.map((stat, index) => (
+              <div key={stat.label} className="relative text-center">
                 <div className="text-3xl font-bold text-primary md:text-4xl">{stat.value}</div>
                 <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
+                {index < stats.length - 1 && (
+                  <div className="absolute right-0 top-1/2 hidden h-12 w-px -translate-y-1/2 bg-border/50 md:block" />
+                )}
               </div>
             ))}
           </div>
