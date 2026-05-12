@@ -7,7 +7,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'BrainTox - AI 디지털 웰빙 분석',
+  title: '뇌톡스 - AI 디지털 웰빙 분석',
   description: 'AI 기반 디지털 사용 습관 분석 및 맞춤 가이드 제공',
   generator: 'v0.app',
   icons: {

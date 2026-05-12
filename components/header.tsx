@@ -22,7 +22,7 @@ export function Header() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
             <Brain className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold tracking-tight">BrainTox</span>
+          <span className="text-xl font-bold tracking-tight">뇌톡스</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

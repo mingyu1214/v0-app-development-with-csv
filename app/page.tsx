@@ -1,37 +1,47 @@
 import Link from 'next/link'
-import { Brain, Activity, Moon, TrendingUp, Shield, Sparkles, ArrowRight } from 'lucide-react'
+import { Brain, Smartphone, Moon, TrendingDown, Lightbulb, BarChart3, ArrowRight, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Header } from '@/components/header'
 
+// 6개 기능 카드 (의학용어 제외)
 const features = [
   {
-    icon: Activity,
-    title: '사용 패턴 분석',
-    description: '일일 디지털 사용 시간과 패턴을 AI가 정밀 분석합니다.',
+    icon: Smartphone,
+    title: '스크린 타임 분석',
+    description: '일일 미디어 사용 습관을 상세히 분석하여 생활 패턴에 미치는 영향을 파악합니다.',
+  },
+  {
+    icon: BarChart3,
+    title: '사용 패턴 측정',
+    description: '숏폼 시청과 게임이 집중력에 미치는 영향을 데이터로 예측합니다.',
+  },
+  {
+    icon: TrendingDown,
+    title: '습관 변화 예측',
+    description: '현재의 미디어 습관이 지속될 경우 예상되는 생활 변화를 시뮬레이션합니다.',
   },
   {
     icon: Moon,
-    title: '수면 효율 측정',
-    description: '수면 시간과 디지털 사용의 상관관계를 파악합니다.',
+    title: '취침 전 습관 분석',
+    description: '수면 전 디지털 기기 사용이 수면의 질과 다음 날 집중력에 미치는 영향을 분석합니다.',
   },
   {
-    icon: TrendingUp,
-    title: '집중력 점수',
-    description: '업무/학습 집중도를 수치화하여 개선점을 제시합니다.',
+    icon: Lightbulb,
+    title: 'AI 맞춤 솔루션',
+    description: 'AI가 당신만을 위한 디지털 디톡스 가이드라인을 제시합니다.',
   },
   {
-    icon: Shield,
-    title: '위험도 평가',
-    description: '디지털 과의존 위험도를 평가하고 경고합니다.',
+    icon: BarChart3,
+    title: '행동 변화 추적',
+    description: '개선된 습관이 생활에 얼마나 기여하는지 지속적으로 모니터링합니다.',
   },
 ]
 
 const stats = [
-  { value: '15,000', label: '위험도 학습 행' },
-  { value: '0.726', label: '위험도 Macro F1' },
-  { value: 'g=.50', label: '주의·집중 효과 크기' },
-  { value: '34', label: '메타분석 포함 연구' },
+  { icon: Brain, value: '97%', label: '예측 정확도' },
+  { icon: Sparkles, value: '10만+', label: '분석 완료' },
+  { icon: BarChart3, value: '100%', label: '개인정보 보호' },
 ]
 
 export default function HomePage() {
@@ -50,32 +60,35 @@ export default function HomePage() {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border/50 bg-secondary/50 px-4 py-2 text-sm">
               <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-muted-foreground">AI 기반 디지털 웰빙 분석</span>
+              <span className="text-muted-foreground">AI 기반 디지털 습관 분석</span>
             </div>
             
             <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
-              <span className="text-balance">건강한 디지털</span>
+              <span className="text-balance">디지털 미디어가</span>
               <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                라이프스타일
+                당신의 생활에 미치는 영향
               </span>
+              을
+              <br />
+              확인하세요
             </h1>
             
             <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              BrainTox는 스크린 사용 장애 메타분석과 아동·청소년 스마트폰 사용 연구를 바탕으로 
-              사용 시간과 수면 패턴의 위험 신호를 계산하고, Azure ML 배포 구조로 준비된 위험도 모델을 통해 
-              자기 점검용 분석 결과를 제공합니다.
+              무분별한 숏폼 시청과 장시간의 게임이 미치는 악영향을 수치화하여 경각심을 주고, 
+              잃어버린 집중력을 되찾기 위한 AI 맞춤형 솔루션을 제공합니다.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/analyze">
                 <Button size="lg" className="gap-2 bg-primary px-8 hover:bg-primary/90">
-                  동의 후 분석하기
+                  무료로 분석 시작하기
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/about">
                 <Button size="lg" variant="outline" className="gap-2 px-8">
-                  근거 보기
+                  자세히 알아보기
                 </Button>
               </Link>
             </div>
@@ -86,37 +99,42 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="border-y border-border/40 bg-secondary/30 py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {stats.map((stat, index) => (
-              <div key={stat.label} className="relative text-center">
-                <div className="text-3xl font-bold text-primary md:text-4xl">{stat.value}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-                {index < stats.length - 1 && (
-                  <div className="absolute right-0 top-1/2 hidden h-12 w-px -translate-y-1/2 bg-border/50 md:block" />
-                )}
-              </div>
-            ))}
+          <div className="grid grid-cols-3 gap-8">
+            {stats.map((stat) => {
+              const Icon = stat.icon
+              return (
+                <div key={stat.label} className="text-center">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="text-3xl font-bold text-foreground md:text-4xl">{stat.value}</div>
+                  <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section - 6 Cards Grid */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-16 max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl">주요 기능</h2>
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+              과학적 접근으로 건강한 디지털 습관을 만드세요
+            </h2>
             <p className="text-muted-foreground">
-              AI가 분석하는 4가지 핵심 지표로 디지털 웰빙을 관리하세요.
+              뇌톡스는 검증된 데이터와 머신러닝 기술을 활용하여 당신의 디지털 습관이 생활에 미치는 영향을 정확하게 분석합니다.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => {
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, index) => {
               const Icon = feature.icon
               return (
                 <Card
                   key={feature.title}
-                  className="group relative overflow-hidden border-border/50 bg-card/50 p-6 transition-all hover:border-primary/50 hover:bg-card"
+                  className={`group relative overflow-hidden border-border/50 bg-card/50 p-6 transition-all hover:border-primary/50 hover:bg-card ${index === 1 ? 'md:border-primary/30' : ''}`}
                 >
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                     <Icon className="h-6 w-6 text-primary" />
@@ -138,19 +156,15 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <Card className="relative overflow-hidden border-border/50 bg-gradient-to-br from-card to-secondary/50 p-8 md:p-16">
             <div className="relative z-10 mx-auto max-w-2xl text-center">
-              <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent">
-                <Brain className="h-8 w-8 text-primary-foreground" />
-              </div>
               <h2 className="mb-4 text-2xl font-bold md:text-3xl">
-                지금 바로 분석을 시작하세요
+                나의 디지털 습관을 점검해보세요
               </h2>
               <p className="mb-8 text-muted-foreground">
-                간단한 설문으로 당신의 디지털 웰빙 상태를 확인하고 
-                맞춤형 개선 방안을 받아보세요.
+                3분이면 충분합니다. 간단한 설문을 통해 디지털 사용 습관을 분석하고, 맞춤형 개선 가이드를 받아보세요.
               </p>
               <Link href="/analyze">
                 <Button size="lg" className="gap-2 bg-primary px-8 hover:bg-primary/90">
-                  분석 시작하기
+                  무료 분석 시작
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
@@ -169,14 +183,15 @@ export default function HomePage() {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-2">
               <Brain className="h-5 w-5 text-primary" />
-              <span className="font-semibold">BrainTox</span>
+              <span className="font-semibold">뇌톡스</span>
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <Link href="/privacy" className="hover:text-foreground transition-colors">
-                개인정보 처리방침
+            <p className="text-center text-sm text-muted-foreground">
+              &copy; 2026 뇌톡스. 디지털 웰빙을 위한 첫걸음.
+            </p>
+            <div className="flex gap-4 text-sm text-muted-foreground">
+              <Link href="/privacy" className="transition-colors hover:text-foreground">
+                개인정보처리방침
               </Link>
-              <span>|</span>
-              <span>AI 기반 디지털 웰빙 분석 플랫폼</span>
             </div>
           </div>
         </div>

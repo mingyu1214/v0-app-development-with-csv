@@ -62,7 +62,7 @@ export default function PrivacyPage() {
             </div>
             <h1 className="mb-4 text-3xl font-bold md:text-4xl">개인정보 처리방침</h1>
             <p className="text-muted-foreground">
-              BrainTox는 사용자의 개인정보 보호를 최우선으로 합니다.
+              뇌톡스는 사용자의 개인정보 보호를 최우선으로 합니다.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               최종 수정일: 2024년 1월 1일
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
               <div>
                 <h3 className="mb-1 font-semibold text-primary">핵심 원칙: 데이터 미저장</h3>
                 <p className="text-sm text-foreground/70">
-                  BrainTox는 사용자의 어떠한 정보도 저장하지 않습니다. 
+                  뇌톡스는 사용자의 어떠한 정보도 저장하지 않습니다. 
                   입력된 정보는 분석 결과 도출 후 즉시 휘발되며, 
                   서버나 데이터베이스에 기록되지 않습니다.
                 </p>
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
             <p className="text-foreground/70">
               개인정보 처리방침에 대한 문의사항이 있으시면 아래로 연락해주세요.
             </p>
-            <p className="mt-2 text-primary">contact@braintox.app</p>
+            <p className="mt-2 text-primary">contact@ntoxx.app</p>
           </Card>
         </div>
       </main>
