@@ -28,7 +28,25 @@ const isOptimalSleep = (sleepHours: number): boolean => {
   return sleepHours >= 6 && sleepHours <= 9
 }
 
-export function analyzeDigitalWellbeing(input: UserInput): AnalysisResult {
+// 로컬 성능 점수 계산 (Azure ML 폴백용)
+const calculateLocalPerformance = (dailyUsageHours: number, sleepHours: number, age: number): number => {
+  const basePerformance = 0.7
+  const usageImpact = dailyUsageHours > 6 ? -0.05 * (dailyUsageHours - 6) : 0.02 * (6 - dailyUsageHours)
+  const sleepImpact = sleepHours >= 7 && sleepHours <= 8 ? 0.1 : -0.05 * Math.abs(sleepHours - 7.5)
+  const ageBonus = age >= 25 && age <= 40 ? 0.05 : 0
+  return basePerformance + usageImpact + sleepImpact + ageBonus + (Math.random() * 0.1 - 0.05)
+}
+
+// 로컬 웰빙 점수 계산 (Azure ML 폴백용)
+const calculateLocalWellbeing = (dailyUsageHours: number, sleepHours: number): number => {
+  const baseWellbeing = 0.65
+  const usageWellbeingImpact = dailyUsageHours > 4 ? -0.04 * (dailyUsageHours - 4) : 0.03 * (4 - dailyUsageHours)
+  const sleepWellbeingImpact = isOptimalSleep(sleepHours) ? 0.15 : -0.1
+  return baseWellbeing + usageWellbeingImpact + sleepWellbeingImpact + (Math.random() * 0.1 - 0.05)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function analyzeDigitalWellbeing(input: UserInput, azurePrediction?: any): AnalysisResult {
   const { age, jobType, dailyUsageHours, sleepHours } = input
 
   // 정규화
@@ -36,24 +54,38 @@ export function analyzeDigitalWellbeing(input: UserInput): AnalysisResult {
   const usageNorm = normalizeUsage(dailyUsageHours)
   const sleepNorm = normalizeSleep(sleepHours)
 
-  // 성능 점수 계산 (복합 로직)
-  const basePerformance = 0.7
-  const usageImpact = dailyUsageHours > 6 ? -0.05 * (dailyUsageHours - 6) : 0.02 * (6 - dailyUsageHours)
-  const sleepImpact = sleepHours >= 7 && sleepHours <= 8 ? 0.1 : -0.05 * Math.abs(sleepHours - 7.5)
-  const ageBonus = age >= 25 && age <= 40 ? 0.05 : 0
-  
-  const performanceScore = Math.max(0.1, Math.min(0.95, 
-    basePerformance + usageImpact + sleepImpact + ageBonus + (Math.random() * 0.1 - 0.05)
-  ))
+  let performanceScore: number
+  let wellbeingScore: number
 
-  // 웰빙 점수 계산
-  const baseWellbeing = 0.65
-  const usageWellbeingImpact = dailyUsageHours > 4 ? -0.04 * (dailyUsageHours - 4) : 0.03 * (4 - dailyUsageHours)
-  const sleepWellbeingImpact = isOptimalSleep(sleepHours) ? 0.15 : -0.1
-  
-  const wellbeingScore = Math.max(0.1, Math.min(0.95,
-    baseWellbeing + usageWellbeingImpact + sleepWellbeingImpact + (Math.random() * 0.1 - 0.05)
-  ))
+  // Azure ML 예측 결과가 있으면 사용
+  if (azurePrediction) {
+    // Azure ML 결과 형식에 따라 파싱 (형식 확인 후 조정 필요)
+    // 일반적으로 [예측값] 또는 {result: 예측값} 형태
+    if (Array.isArray(azurePrediction)) {
+      // [performance, wellbeing] 또는 [risk_level] 형태일 수 있음
+      performanceScore = azurePrediction[0] ?? 0.5
+      wellbeingScore = azurePrediction[1] ?? azurePrediction[0] ?? 0.5
+    } else if (typeof azurePrediction === 'object') {
+      performanceScore = azurePrediction.performance_score ?? azurePrediction.score ?? 0.5
+      wellbeingScore = azurePrediction.wellbeing_score ?? azurePrediction.performance_score ?? 0.5
+    } else if (typeof azurePrediction === 'number') {
+      // 단일 위험도 점수인 경우
+      performanceScore = 1 - azurePrediction // 위험도가 높으면 성능 낮음
+      wellbeingScore = 1 - azurePrediction
+    } else {
+      // 파싱 실패 시 로컬 계산
+      performanceScore = calculateLocalPerformance(dailyUsageHours, sleepHours, age)
+      wellbeingScore = calculateLocalWellbeing(dailyUsageHours, sleepHours)
+    }
+  } else {
+    // 로컬 계산 (폴백)
+    performanceScore = calculateLocalPerformance(dailyUsageHours, sleepHours, age)
+    wellbeingScore = calculateLocalWellbeing(dailyUsageHours, sleepHours)
+  }
+
+  // 점수 범위 보정
+  performanceScore = Math.max(0.1, Math.min(0.95, performanceScore))
+  wellbeingScore = Math.max(0.1, Math.min(0.95, wellbeingScore))
 
   // 위험 레벨 판정 (건강 권고 기준 적용)
   // - 권장 수면: 7-9시간

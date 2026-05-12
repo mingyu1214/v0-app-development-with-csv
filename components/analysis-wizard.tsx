@@ -129,7 +129,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
                 {privacyAgreed && <Check className="h-4 w-4 text-primary-foreground" />}
               </div>
               <span className="text-left text-sm">
-                <Link href="/privacy" className="text-primary underline" target="_blank">
+                <Link href="/privacy" className="text-primary underline">
                   개인정보 처리방침
                 </Link>
                 을 읽었으며, 위 정보 수집에 동의합니다.
