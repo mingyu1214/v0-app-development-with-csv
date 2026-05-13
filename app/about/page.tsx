@@ -21,13 +21,13 @@ const missionText = `무분별한 숏폼 시청과 장시간의 게임이 집중
 const techFeatures = [
   {
     icon: Brain,
-    title: '데이터 중심 분석',
-    description: '18,500명이 넘는 데이터를 분석하여 예측 모델을 생성하고 최적화하였습니다.',
+    title: '학술 연구 기반 알고리즘',
+    description: '34개 연구를 종합한 메타분석과 최신 심리학 연구를 기반으로 생활 영향도를 계산합니다.',
   },
   {
     icon: FileText,
-    title: '근거 중심 분석',
-    description: 'WHO 권장 기준(2시간)과 학술 연구에서 확인된 임계값(4시간)을 기반으로 위험도를 산정합니다.',
+    title: '데이터 중심 분석',
+    description: '18,500명이 넘는 데이터를 분석하여 예측 모델을 생성하고 최적화하였습니다.',
   },
   {
     icon: Sparkles,
