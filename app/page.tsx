@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Header } from '@/components/header'
 
-// 6개 기능 카드 (의학용어 제외)
+// 6개 기능 카드
 const features = [
   {
     icon: Smartphone,
@@ -13,18 +13,18 @@ const features = [
   },
   {
     icon: BarChart3,
-    title: '사용 패턴 측정',
-    description: '숏폼 시청과 게임이 집중력에 미치는 영향을 데이터로 예측합니다.',
-  },
-  {
-    icon: TrendingDown,
-    title: '습관 변화 예측',
-    description: '현재의 미디어 습관이 지속될 경우 예상되는 생활 변화를 시뮬레이션합니다.',
+    title: '연령별 사용 패턴 분석',
+    description: '연령별로 사용 패턴에 따른 영향도를 데이터로 예측합니다.',
   },
   {
     icon: Moon,
-    title: '취침 전 습관 분석',
-    description: '수면 전 디지털 기기 사용이 수면의 질과 다음 날 집중력에 미치는 영향을 분석합니다.',
+    title: '수면 시간 분석',
+    description: '수면 시간이 다음 날 집중력과 생산성에 미치는 영향을 분석합니다.',
+  },
+  {
+    icon: TrendingDown,
+    title: 'Azure Platform 기반',
+    description: '신뢰할 수 있는 MS Azure Platform을 기반으로 위험도 모델을 시뮬레이션합니다.',
   },
   {
     icon: Lightbulb,
@@ -39,8 +39,8 @@ const features = [
 ]
 
 const stats = [
-  { icon: Brain, value: '97%', label: '예측 정확도' },
-  { icon: Sparkles, value: '10만+', label: '분석 완료' },
+  { icon: Brain, value: '18,500명+', label: '분석 완료' },
+  { icon: Sparkles, value: '97%', label: '예측 정확도' },
   { icon: BarChart3, value: '100%', label: '개인정보 보호' },
 ]
 
