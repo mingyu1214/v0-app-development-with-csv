@@ -46,6 +46,9 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
     }
   }
 
+  const totalHours = formData.dailyUsageHours + formData.sleepHours
+  const isOver24Hours = totalHours > 24
+
   const canProceed = () => {
     switch (currentStep) {
       case 0:
@@ -53,9 +56,9 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
       case 1:
         return formData.age >= 14 && formData.age <= 80
       case 2:
-        return formData.dailyUsageHours >= 0
+        return formData.dailyUsageHours >= 0 && !isOver24Hours
       case 3:
-        return formData.sleepHours >= 0
+        return formData.sleepHours >= 0 && !isOver24Hours
       default:
         return true
     }
@@ -188,6 +191,11 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
                   : '다소 높은 사용량입니다.'}
               </p>
             </div>
+            {isOver24Hours && (
+              <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">
+                <p>디지털 사용 시간 + 수면 시간이 24시간을 초과합니다. 값을 조정해주세요.</p>
+              </div>
+            )}
           </div>
         )
 
@@ -221,6 +229,11 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
                   : '수면 시간이 다소 깁니다.'}
               </p>
             </div>
+            {isOver24Hours && (
+              <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">
+                <p>디지털 사용 시간({formData.dailyUsageHours}시간) + 수면 시간({formData.sleepHours}시간) = {totalHours}시간으로 24시간을 초과합니다.</p>
+              </div>
+            )}
           </div>
         )
 
