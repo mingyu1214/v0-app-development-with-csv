@@ -64,7 +64,7 @@ export default function PrivacyPage() {
               뇌톡스는 사용자의 개인정보 보호를 최우선으로 합니다.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              최종 수정일: 2024년 1월 1일
+              최종 수정일: 2026년 5월 14일
             </p>
           </div>
 
