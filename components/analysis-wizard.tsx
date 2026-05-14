@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, User, Clock, Moon, Briefcase, Shield, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, User, Clock, Moon, Shield, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
-import { JOB_TYPES, type UserInput } from '@/lib/types'
+import { type UserInput } from '@/lib/types'
 import Link from 'next/link'
 
 interface AnalysisWizardProps {
@@ -18,9 +18,8 @@ interface AnalysisWizardProps {
 const steps = [
   { id: 0, title: '개인정보 동의', icon: Shield, description: '분석을 위한 정보 수집에 동의해주세요' },
   { id: 1, title: '나이', icon: User, description: '연령대를 선택해주세요' },
-  { id: 2, title: '직업', icon: Briefcase, description: '직업을 선택해주세요' },
-  { id: 3, title: '디지털 사용', icon: Clock, description: '하루 평균 디지털 기기 사용 시간' },
-  { id: 4, title: '수면', icon: Moon, description: '하루 평균 수면 시간' },
+  { id: 2, title: '디지털 사용', icon: Clock, description: '하루 평균 디지털 기기 사용 시간' },
+  { id: 3, title: '수면', icon: Moon, description: '하루 평균 수면 시간' },
 ]
 
 export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
@@ -54,10 +53,8 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
       case 1:
         return formData.age >= 14 && formData.age <= 80
       case 2:
-        return formData.jobType !== ''
-      case 3:
         return formData.dailyUsageHours >= 0
-      case 4:
+      case 3:
         return formData.sleepHours >= 0
       default:
         return true
@@ -75,10 +72,6 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary" />
                   나이 (연령대 파악 목적)
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  직업 유형 (사용 패턴 분석)
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -167,26 +160,6 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
 
       case 2:
         return (
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-            {JOB_TYPES.map((job) => (
-              <button
-                key={job.value}
-                onClick={() => setFormData({ ...formData, jobType: job.value })}
-                className={cn(
-                  'rounded-xl border-2 p-4 text-center transition-all',
-                  formData.jobType === job.value
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-border hover:border-primary/50 hover:bg-secondary'
-                )}
-              >
-                <div className="font-medium">{job.label}</div>
-              </button>
-            ))}
-          </div>
-        )
-
-      case 3:
-        return (
           <div className="space-y-8">
             <div className="text-center">
               <div className="mb-2 text-6xl font-bold text-primary">{formData.dailyUsageHours}</div>
@@ -218,7 +191,7 @@ export function AnalysisWizard({ onComplete, isLoading }: AnalysisWizardProps) {
           </div>
         )
 
-      case 4:
+      case 3:
         return (
           <div className="space-y-8">
             <div className="text-center">

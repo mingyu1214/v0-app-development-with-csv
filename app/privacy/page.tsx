@@ -10,7 +10,6 @@ export default function PrivacyPage() {
       content: `본 서비스는 디지털 웰빙 분석을 위해 다음 정보를 일시적으로 처리합니다:
       
 • 나이 (연령대 파악 목적)
-• 직업 유형 (사용 패턴 분석 목적)
 • 일일 디지털 기기 사용 시간
 • 일일 수면 시간
 
@@ -112,7 +111,7 @@ export default function PrivacyPage() {
             <p className="text-foreground/70">
               개인정보 처리방침에 대한 문의사항이 있으시면 아래로 연락해주세요.
             </p>
-            <p className="mt-2 text-primary">contact@ntoxx.app</p>
+            <p className="mt-2 text-primary">contact@outlook.com</p>
           </Card>
         </div>
       </main>
