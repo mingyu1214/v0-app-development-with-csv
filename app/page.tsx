@@ -40,7 +40,7 @@ const features = [
 
 const stats = [
   { icon: Brain, value: '18,500명+', label: '분석 완료' },
-  { icon: Sparkles, value: '97%', label: '예측 정확도' },
+  { icon: Sparkles, value: '77.2%', label: '예측 정확도' },
   { icon: BarChart3, value: '100%', label: '개인정보 보호' },
 ]
 
